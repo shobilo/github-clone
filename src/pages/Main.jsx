@@ -2,9 +2,9 @@ import React from 'react'
 
 const Main = () => {
   return (
-    <div>
-      
-    </div>
+    <p>
+      Main page
+    </p>
   )
 }
 

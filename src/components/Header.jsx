@@ -3,6 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [value, setValue] = React.useState('one');
@@ -21,8 +22,13 @@ const Header = () => {
         indicatorColor="primary"
         aria-label="primary tabs example"
       >
-        <Tab value="one" label="Main" />
-        <Tab value="two" label="About" />
+        <Link to="/">
+          <Tab value="one" label="Main" />
+        </Link>
+
+        <Link to="/about">
+          <Tab value="two" label="About" />
+        </Link>
       </Tabs>
     </Box>
     </div>
