@@ -3,19 +3,8 @@ import React from 'react'
 const About = () => {
   return (
     <>
-      <p>
-        Я создал лучший сайт
-      </p>
-      <p>
-        Я создал лучший сайт
-      </p>
-      <p>
-        Я создал лучший сайт
-      </p>
-
-      <p>
-        Я создал лучший сайт
-      </p>
+      <strong>Github test clone</strong>
+      <p>simple searcher for repositories</p>
     </>
     
   )

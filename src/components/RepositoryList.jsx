@@ -2,12 +2,19 @@ import { Stack } from '@mui/material';
 import React from 'react'
 import RepositoryShortInfo from './RepositoryShortInfo';
 
-const RepositoryList = () => {
+const RepositoryList = ({repositories}) => {
+  if (repositories.length === 0) {
+    return (
+      <h1>There is no a single post</h1>
+    )
+  }
+
   return (
     <Stack spacing={3}>
-      <RepositoryShortInfo/>
-      <RepositoryShortInfo/>
-      <RepositoryShortInfo/>
+      {repositories.map((repository) => (
+        <RepositoryShortInfo repository={repository} key={repository.id} />
+      )
+      )}
     </Stack>
   )
 }
