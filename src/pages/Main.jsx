@@ -1,7 +1,8 @@
 import { Input, Stack, Pagination } from "@mui/material";
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import RepositoryList from "../components/RepositoryList";
 import MUISelect from "../components/UI/Select";
+import { useRepositories } from "../hooks/useRepositories";
 
 const Main = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -13,38 +14,11 @@ const Main = () => {
     { id: 2, name: "framework", description: "react", language: "JavaScript" },
     { id: 3, name: "trash", description: "pascal", language: "HTML" },
   ]);
-
-  const sortedRepositories = useMemo(getSortedRepositories, [
-    selectedSort,
-    repositories,
-  ]);
-
-  const sortedAndSearchedRepositories = useMemo(() => {
-    return sortedRepositories.filter((repository) =>
-      repository.name.toLowerCase().includes(searchInput.toLowerCase())
-    );
-  }, [sortedRepositories, searchInput]);
-
-  const onSearchInputChanged = (event) => {
-    setSearchInput(event.target.value);
-  };
+  const sortedAndSearchedRepositories = useRepositories(repositories, selectedSort, searchInput)
 
   const onPageChanged = (event, value) => {
     setPage(value);
   };
-
-  const onSortSelected = (sort) => {
-    setSelectedSort(sort);
-  };
-
-  function getSortedRepositories() {
-    if (selectedSort) {
-      return [...repositories].sort((a, b) => {
-        return a[selectedSort].localeCompare(b[selectedSort]);
-      });
-    }
-    return repositories;
-  }
 
   return (
     <main>
@@ -52,12 +26,12 @@ const Main = () => {
         <Input
           placeholder="Input here the repository name"
           value={searchInput}
-          onChange={onSearchInputChanged}
+          onChange={event => setSearchInput(event.target.value)}
         />
         <RepositoryList repositories={sortedAndSearchedRepositories} />
         <MUISelect
           value={selectedSort}
-          onChange={onSortSelected}
+          onChange={sort => setSelectedSort(sort)}
           label="Sort by"
           options={[
             { value: "name", label: "Name" },
