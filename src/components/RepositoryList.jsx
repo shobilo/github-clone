@@ -5,7 +5,7 @@ import RepositoryShortInfo from './RepositoryShortInfo';
 const RepositoryList = ({repositories}) => {
   if (repositories.length === 0) {
     return (
-      <h1>There is no a single post</h1>
+      <h1>There is no a single repository</h1>
     )
   }
 
