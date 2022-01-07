@@ -3,36 +3,36 @@ import React, { useEffect, useState } from "react";
 import RepositoryList from "../components/RepositoryList";
 import MUISelect from "../components/UI/Select";
 import { useFetching } from "../hooks/useFetching";
-import { useRepositories } from "../hooks/useRepositories";
+// import { useRepositories } from "../hooks/useRepositories";
 import APIworker from "../services/APIworker";
+import { getPagesCount } from "../services/pages";
 
 const Main = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
-  const [page, setPage] = useState("1");
   const [selectedSort, setSelectedSort] = useState("");
   const [selectedOrder, setSelectedOrder] = useState("");
   const [repositories, setRepositories] = useState([]);
+  const [repositoriesLimit, setRepositoriesLimit] = useState(3)
+  const [totalPages, setTotalPages] = useState(0)
 
   const [fetchRepositories, isRepositoriesLoading, fetchRepositoriesError] =
     useFetching(async () => {
-      const response = await APIworker.getRepositories("angular");
+      const response = await APIworker.getRepositories(searchInput, selectedSort, selectedOrder, repositoriesLimit, currentPage);
       setRepositories(response.data.items);
+      const totalPages = getPagesCount(response.data.total_count, repositoriesLimit)
+      setTotalPages(totalPages)
     });
 
-  const customRepositories = useRepositories(
-    repositories,
-    selectedSort,
-    searchInput,
-    selectedOrder
-  );
-
   useEffect(() => {
-    fetchRepositories();
-  }, []);
-
-  const onPageChanged = (event, value) => {
-    setPage(value);
-  };
+    if (searchInput === ""){
+      setRepositories([])
+      setTotalPages(0)
+    }
+    else {
+      fetchRepositories();
+    }
+  }, [searchInput, selectedSort, selectedOrder, repositoriesLimit, currentPage]);
 
   return (
     <main>
@@ -50,7 +50,7 @@ const Main = () => {
         {isRepositoriesLoading ? (
           <CircularProgress />
         ) : (
-          <RepositoryList repositories={customRepositories} />
+          <RepositoryList repositories={repositories} />
         )}
 
         <Stack direction="row">
@@ -59,9 +59,10 @@ const Main = () => {
             onChange={(sort) => setSelectedSort(sort)}
             label="Sort by"
             options={[
-              { value: "name", label: "Name" },
-              { value: "description", label: "Description" },
-              { value: "language", label: "Language" },
+              { value: "stars", label: "Stars" },
+              { value: "forks", label: "Forks" },
+              { value: "help-wanted-issues", label: "Help wanted issues" },
+              { value: "updated", label: "Last updated" }
             ]}
           />
           <MUISelect
@@ -76,9 +77,9 @@ const Main = () => {
         </Stack>
 
         <Pagination
-          count={30}
-          page={page}
-          onChange={onPageChanged}
+          count={totalPages}
+          page={currentPage}
+          onChange={(event, value) => setCurrentPage(value)}
           showFirstButton
           showLastButton
         />
