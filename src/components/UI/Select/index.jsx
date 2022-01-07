@@ -8,7 +8,7 @@ const MUISelect = ({ value, onChange, options, label }) => {
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 80 }}>
+    <FormControl sx={{ m: 1, minWidth: 200 }}>
       <InputLabel id="selectLabel">{label}</InputLabel>
       <Select
         labelId={`select${label}`}
