@@ -1,7 +1,8 @@
 import * as constants from './constants';
 
 const defaultState = {
-  isAuth: false
+  isAuth: false,
+  isUserLoading: true
 }
 
 const userReducer = (state = defaultState, action) => {
@@ -10,6 +11,11 @@ const userReducer = (state = defaultState, action) => {
       return {
         ...state,
         isAuth: action.payload
+      }
+    case constants.SET_IS_USER_LOADING:
+      return {
+        ...state,
+        isUserLoading: action.payload
       }
     default: 
       return state

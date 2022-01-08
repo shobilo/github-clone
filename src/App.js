@@ -3,7 +3,7 @@ import AppRouter from "./components/AppRouter";
 import Header from "./components/UI/Header";
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
-import { setAuth } from './redux/user/actions'
+import { setAuth, setIsUserLoading } from './redux/user/actions'
 import './styles/app.css'
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
     if (localIsAuth){
       dispatch(setAuth(localIsAuth === 'true'))
     }
+    dispatch(setIsUserLoading(false))
   }, [])
 
   return (

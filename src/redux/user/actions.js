@@ -6,3 +6,10 @@ export const setAuth = (setAuthBool) => {
     payload: setAuthBool
   }
 }
+
+export const setIsUserLoading = (setIsUserLoadingBool) => {
+  return {
+    type: constants.SET_IS_USER_LOADING,
+    payload: setIsUserLoadingBool
+  }
+}
