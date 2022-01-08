@@ -3,13 +3,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const RepositoryShortInfo = (props) => {
-  const {name, description, language} = props.repository
+  const {full_name, name, description, language} = props.repository
 
   return (
     <section>
       <Card sx={{ minWidth: 800 }}>
         <CardContent>
-          <h1>{name}</h1>
+          <Link to={`/${full_name}`}>
+            <h1>{name}</h1>
+          </Link>
           <p>{description}</p>
           <p>{language}</p>
         </CardContent>

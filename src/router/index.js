@@ -6,7 +6,7 @@ import UnknownPage from '../pages/UnknownPage'
 const publicRoutes = [
   {path: '/', element: <Main/>, exact: true},
   {path: '/about', element: <About/>, exact: true},
-  {path: '/repository/:id', element: <RepositoryIdPage/>, exact: true},
+  {path: '/:owner/:repository', element: <RepositoryIdPage/>, exact: true},
   {path: '*', element: <UnknownPage/>, exact: false}
 ]
 

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import RepositoryList from "../components/RepositoryList";
 import MUISelect from "../components/UI/Select";
 import { useFetching } from "../hooks/useFetching";
-// import { useRepositories } from "../hooks/useRepositories";
 import APIworker from "../services/APIworker";
 import { getPagesCount } from "../services/pages";
 
