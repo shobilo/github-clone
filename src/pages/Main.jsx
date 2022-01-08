@@ -12,23 +12,31 @@ const Main = () => {
   const [selectedSort, setSelectedSort] = useState("");
   const [selectedOrder, setSelectedOrder] = useState("");
   const [repositories, setRepositories] = useState([]);
-  const [repositoriesLimit, setRepositoriesLimit] = useState(3)
-  const [totalPages, setTotalPages] = useState(0)
+  const [repositoriesLimit, setRepositoriesLimit] = useState(3);
+  const [totalPages, setTotalPages] = useState(0);
 
   const [fetchRepositories, isRepositoriesLoading, fetchRepositoriesError] =
     useFetching(async () => {
-      const response = await APIworker.getRepositories(searchInput, selectedSort, selectedOrder, repositoriesLimit, currentPage);
+      const response = await APIworker.getRepositories(
+        searchInput,
+        selectedSort,
+        selectedOrder,
+        repositoriesLimit,
+        currentPage
+      );
       setRepositories(response.data.items);
-      const totalPages = getPagesCount(response.data.total_count, repositoriesLimit)
-      setTotalPages(totalPages)
+      const totalPages = getPagesCount(
+        response.data.total_count,
+        repositoriesLimit
+      );
+      setTotalPages(totalPages);
     });
 
   useEffect(() => {
-    if (searchInput === ""){
-      setRepositories([])
-      setTotalPages(0)
-    }
-    else {
+    if (searchInput === "") {
+      setRepositories([]);
+      setTotalPages(0);
+    } else {
       fetchRepositories();
     }
   }, [searchInput, selectedSort, selectedOrder, repositoriesLimit, currentPage]);
@@ -42,11 +50,9 @@ const Main = () => {
           onChange={(event) => setSearchInput(event.target.value)}
         />
 
-        {fetchRepositoriesError && (
+        {fetchRepositoriesError ? (
           <h1>Error has occurred: {fetchRepositoriesError}</h1>
-        )}
-        
-        {isRepositoriesLoading ? (
+        ) : isRepositoriesLoading ? (
           <CircularProgress />
         ) : (
           <RepositoryList repositories={repositories} />
@@ -61,7 +67,7 @@ const Main = () => {
               { value: "stars", label: "Stars" },
               { value: "forks", label: "Forks" },
               { value: "help-wanted-issues", label: "Help wanted issues" },
-              { value: "updated", label: "Last updated" }
+              { value: "updated", label: "Last updated" },
             ]}
           />
           <MUISelect

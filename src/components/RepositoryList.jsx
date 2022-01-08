@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import React from "react";
-import RepositoryShortInfo from "./RepositoryShortInfo";
+import RepositoryListItem from "./RepositoryListItem";
 
 const RepositoryList = ({ repositories }) => {
   if (repositories.length === 0) {
@@ -10,7 +10,7 @@ const RepositoryList = ({ repositories }) => {
   return (
     <Stack spacing={3}>
       {repositories.map((repository) => (
-        <RepositoryShortInfo repository={repository} key={repository.id} />
+        <RepositoryListItem repository={repository} key={repository.id} />
       ))}
     </Stack>
   );
