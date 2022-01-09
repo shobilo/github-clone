@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 const UnknownPage = () => {
   return (
-    <>
-      <p>You have visited the unexisted page</p>
+    <main>
+      <h1>You have visited the unexisted page</h1>
       <Link to="/">Go to the main page</Link>
-    </>
+    </main>
   )
 }
 
