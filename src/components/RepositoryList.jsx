@@ -1,10 +1,16 @@
-import { Stack } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import RepositoryListItem from "./RepositoryListItem";
 
 const RepositoryList = ({ repositories }) => {
   if (repositories.length === 0) {
-    return <h1>There is no a single repository</h1>;
+    return (
+      <Grid container justifyContent="center">
+        <Typography sx={{fontSize: "2rem"}}>
+          There are no repositories to show
+        </Typography>  
+      </Grid>
+    );
   }
 
   return (

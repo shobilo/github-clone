@@ -4,13 +4,14 @@ import Header from "./components/UI/Header";
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { setAuth, setIsUserLoading } from './redux/user/actions'
+import { IS_AUTH } from './constants/localStorage'
 import './styles/app.css'
 
 function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const localIsAuth = localStorage.getItem('isAuth')
+    const localIsAuth = localStorage.getItem(IS_AUTH)
     if (localIsAuth){
       dispatch(setAuth(localIsAuth === 'true'))
     }

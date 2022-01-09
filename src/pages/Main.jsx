@@ -1,16 +1,19 @@
-import { Input, Stack, Pagination, CircularProgress } from "@mui/material";
+import { Stack, Pagination, CircularProgress, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import RepositoryList from "../components/RepositoryList";
-import MUISelect from "../components/UI/Select";
 import { useFetching } from "../hooks/useFetching";
 import APIworker from "../services/APIworker";
 import { getPagesCount } from "../services/pages";
+import { FILTER_OPTIONS } from "../constants/localStorage";
+import RepositoryFilter from "../components/RepositoryFilter";
 
 const Main = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchInput, setSearchInput] = useState("");
-  const [selectedSort, setSelectedSort] = useState("");
-  const [selectedOrder, setSelectedOrder] = useState("");
+  
+  const options = JSON.parse(localStorage.getItem(FILTER_OPTIONS));
+  const [currentPage, setCurrentPage] = useState(options?.currentPage || 1);
+  const [searchInput, setSearchInput] = useState(options?.searchInput || "");
+  const [selectedSort, setSelectedSort] = useState(options?.selectedSort || "");
+  const [selectedOrder, setSelectedOrder] = useState(options?.selectedOrder || "");
   const [repositories, setRepositories] = useState([]);
   const [repositoriesLimit, setRepositoriesLimit] = useState(3);
   const [totalPages, setTotalPages] = useState(0);
@@ -25,11 +28,12 @@ const Main = () => {
         currentPage
       );
       setRepositories(response.data.items);
-      const totalPages = getPagesCount(
+      const totalPagesCount = getPagesCount(
         response.data.total_count,
         repositoriesLimit
       );
-      setTotalPages(totalPages);
+
+      setTotalPages(totalPagesCount);
     });
 
   useEffect(() => {
@@ -39,15 +43,26 @@ const Main = () => {
     } else {
       fetchRepositories();
     }
-  }, [searchInput, selectedSort, selectedOrder, repositoriesLimit, currentPage]);
+
+    const filterOptions = {
+      searchInput,
+      selectedSort,
+      selectedOrder,
+      currentPage
+    }
+    localStorage.setItem(FILTER_OPTIONS, JSON.stringify(filterOptions));
+  }, [ searchInput, selectedSort, selectedOrder, repositoriesLimit, currentPage ]);
 
   return (
     <main>
       <Stack spacing={4}>
-        <Input
-          placeholder="Input here the repository name"
-          value={searchInput}
-          onChange={(event) => setSearchInput(event.target.value)}
+        <RepositoryFilter
+          fields={
+            {searchInput, setSearchInput,
+            selectedSort, setSelectedSort,
+            selectedOrder, setSelectedOrder,
+            setCurrentPage}
+          }
         />
 
         {fetchRepositoriesError ? (
@@ -58,36 +73,19 @@ const Main = () => {
           <RepositoryList repositories={repositories} />
         )}
 
-        <Stack direction="row">
-          <MUISelect
-            value={selectedSort}
-            onChange={(sort) => setSelectedSort(sort)}
-            label="Sort by"
-            options={[
-              { value: "stars", label: "Stars" },
-              { value: "forks", label: "Forks" },
-              { value: "help-wanted-issues", label: "Help wanted issues" },
-              { value: "updated", label: "Last updated" },
-            ]}
+        <Grid
+          container
+          justifyContent="center">
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(event, value) => setCurrentPage(value)}
+            color="secondary"
+            showFirstButton
+            showLastButton
           />
-          <MUISelect
-            value={selectedOrder}
-            onChange={(order) => setSelectedOrder(order)}
-            label="Order by"
-            options={[
-              { value: "asc", label: "Ascending" },
-              { value: "desc", label: "Descending" },
-            ]}
-          />
-        </Stack>
-
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(event, value) => setCurrentPage(value)}
-          showFirstButton
-          showLastButton
-        />
+        </Grid>
+        
       </Stack>
     </main>
   );

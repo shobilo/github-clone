@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import {
   Button,
   ButtonGroup,
-  Divider,
   FormControlLabel,
   Stack,
   Switch,
@@ -22,9 +21,9 @@ const Header = () => {
   }
 
   return (
-    <header className="Header">
+    <header>
       <Stack direction="row">
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           <ButtonGroup
             color="primary"
             variant="outlined"
@@ -33,7 +32,7 @@ const Header = () => {
             <Button>
               <Link style={{ textDecoration: "none", color: "black" }} to="/">
                 Main
-              </Link>
+              </Link> 
             </Button>
             <Button>
               <Link
@@ -59,7 +58,6 @@ const Header = () => {
           />
         </Stack>
       </Stack>
-      <Divider>Content</Divider>
     </header>
   );
 };
