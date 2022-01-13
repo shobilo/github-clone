@@ -23,25 +23,25 @@ const Header = () => {
   return (
     <header>
       <Stack direction="row">
-        <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
+        <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <ButtonGroup
             color="primary"
             variant="outlined"
             aria-label="outlined button group"
           >
-            <Button>
-              <Link style={{ textDecoration: "none", color: "black" }} to="/">
+            <Link style={{ textDecoration: "none", color: "black" }} to="/">
+              <Button>
                 Main
-              </Link> 
-            </Button>
-            <Button>
-              <Link
-                style={{ textDecoration: "none", color: "black" }}
-                to="/about"
-              >
+              </Button>
+            </Link> 
+            <Link
+              style={{ textDecoration: "none", color: "black" }}
+              to="/about"
+            >
+              <Button>
                 About
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </ButtonGroup>
         </Box>
         <Stack direction="row">

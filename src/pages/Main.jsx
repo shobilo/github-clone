@@ -4,28 +4,32 @@ import RepositoryList from "../components/RepositoryList";
 import { useFetching } from "../hooks/useFetching";
 import APIworker from "../services/APIworker";
 import { getPagesCount } from "../services/pages";
-import { FILTER_OPTIONS } from "../constants/localStorage";
+import { FILTER_OPTIONS } from "../constants/sessionStorage";
 import RepositoryFilter from "../components/RepositoryFilter";
 
 const Main = () => {
   
-  const options = JSON.parse(localStorage.getItem(FILTER_OPTIONS));
+  const options = JSON.parse(sessionStorage.getItem(FILTER_OPTIONS));
   const [currentPage, setCurrentPage] = useState(options?.currentPage || 1);
   const [searchInput, setSearchInput] = useState(options?.searchInput || "");
   const [selectedSort, setSelectedSort] = useState(options?.selectedSort || "");
   const [selectedOrder, setSelectedOrder] = useState(options?.selectedOrder || "");
+  const [repositoriesLimit, setRepositoriesLimit] = useState(options?.repositoriesLimit || 3);
   const [repositories, setRepositories] = useState([]);
-  const [repositoriesLimit, setRepositoriesLimit] = useState(3);
   const [totalPages, setTotalPages] = useState(0);
+
+  const filterOptions = {
+    searchInput,
+    selectedSort,
+    selectedOrder,
+    repositoriesLimit,
+    currentPage
+  }
 
   const [fetchRepositories, isRepositoriesLoading, fetchRepositoriesError] =
     useFetching(async () => {
       const response = await APIworker.getRepositories(
-        searchInput,
-        selectedSort,
-        selectedOrder,
-        repositoriesLimit,
-        currentPage
+        ...Object.values(filterOptions)
       );
       setRepositories(response.data.items);
       const totalPagesCount = getPagesCount(
@@ -43,15 +47,8 @@ const Main = () => {
     } else {
       fetchRepositories();
     }
-
-    const filterOptions = {
-      searchInput,
-      selectedSort,
-      selectedOrder,
-      currentPage
-    }
-    localStorage.setItem(FILTER_OPTIONS, JSON.stringify(filterOptions));
-  }, [ searchInput, selectedSort, selectedOrder, repositoriesLimit, currentPage ]);
+    sessionStorage.setItem(FILTER_OPTIONS, JSON.stringify(filterOptions));
+  }, [ ...Object.values(filterOptions) ]);
 
   return (
     <main>
@@ -61,7 +58,7 @@ const Main = () => {
             {searchInput, setSearchInput,
             selectedSort, setSelectedSort,
             selectedOrder, setSelectedOrder,
-            setCurrentPage}
+            setCurrentPage, setRepositoriesLimit}
           }
         />
 

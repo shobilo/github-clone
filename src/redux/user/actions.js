@@ -1,15 +1,15 @@
-import * as constants from './constants'
+import * as actionType from './actionTypes'
 
 export const setAuth = (setAuthBool) => {
   return {
-    type: constants.SET_AUTH,
+    type: actionType.SET_AUTH,
     payload: setAuthBool
   }
 }
 
 export const setIsUserLoading = (setIsUserLoadingBool) => {
   return {
-    type: constants.SET_IS_USER_LOADING,
+    type: actionType.SET_IS_USER_LOADING,
     payload: setIsUserLoadingBool
   }
 }

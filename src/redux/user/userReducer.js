@@ -1,4 +1,4 @@
-import * as constants from './constants';
+import * as actionType from './actionTypes';
 
 const defaultState = {
   isAuth: false,
@@ -7,12 +7,12 @@ const defaultState = {
 
 const userReducer = (state = defaultState, action) => {
   switch(action.type) {
-    case constants.SET_AUTH:
+    case actionType.SET_AUTH:
       return {
         ...state,
         isAuth: action.payload
       }
-    case constants.SET_IS_USER_LOADING:
+    case actionType.SET_IS_USER_LOADING:
       return {
         ...state,
         isUserLoading: action.payload
