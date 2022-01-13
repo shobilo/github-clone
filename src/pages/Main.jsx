@@ -14,7 +14,7 @@ const Main = () => {
   const [searchInput, setSearchInput] = useState(options?.searchInput || "");
   const [selectedSort, setSelectedSort] = useState(options?.selectedSort || "");
   const [selectedOrder, setSelectedOrder] = useState(options?.selectedOrder || "");
-  const [repositoriesLimit, setRepositoriesLimit] = useState(options?.repositoriesLimit || 3);
+  const [repositoriesLimit, setRepositoriesLimit] = useState(options?.repositoriesLimit || 1);
   const [repositories, setRepositories] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -58,7 +58,8 @@ const Main = () => {
             {searchInput, setSearchInput,
             selectedSort, setSelectedSort,
             selectedOrder, setSelectedOrder,
-            setCurrentPage, setRepositoriesLimit}
+            repositoriesLimit, setRepositoriesLimit,
+            setCurrentPage}
           }
         />
 

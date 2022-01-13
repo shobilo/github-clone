@@ -6,13 +6,10 @@ import { FILTER_OPTIONS } from "../constants/sessionStorage";
 
 const RepositoryFilter = (props) => {
   const {
-    searchInput,
-    setSearchInput,
-    selectedSort,
-    setSelectedSort,
-    selectedOrder,
-    setSelectedOrder,
-    setRepositoriesLimit,
+    searchInput, setSearchInput,
+    selectedSort, setSelectedSort,
+    selectedOrder, setSelectedOrder,
+    repositoriesLimit, setRepositoriesLimit,
     setCurrentPage,
   } = props.fields;
 
@@ -22,6 +19,7 @@ const RepositoryFilter = (props) => {
     setSearchInput("");
     setSelectedSort("");
     setSelectedOrder("");
+    setRepositoriesLimit("")
   };
 
   return (
@@ -37,6 +35,7 @@ const RepositoryFilter = (props) => {
             { value: "help-wanted-issues", label: "Help wanted issues" },
             { value: "updated", label: "Last updated" },
           ]}
+          isNone={true}
         />
         <MUISelect
           value={selectedOrder}
@@ -46,15 +45,18 @@ const RepositoryFilter = (props) => {
             { value: "asc", label: "Ascending" },
             { value: "desc", label: "Descending" },
           ]}
+          isNone={true}
         />
         <MUISelect
-        value={selectedOrder}
+        value={repositoriesLimit}
         onChange={(limit) => setRepositoriesLimit(limit)}
         label="Limit"
         options={[
-          { value: "asc", label: "Ascending" },
-          { value: "desc", label: "Descending" },
+          { value: 1, label: "1" },
+          { value: 2, label: "2" },
+          { value: 3, label: "3" }
         ]}
+        isNone={false}
       />
         <Tooltip title="Reset filter">
           <IconButton onClick={onResetClicked}>

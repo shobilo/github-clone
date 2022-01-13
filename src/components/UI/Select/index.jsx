@@ -1,7 +1,7 @@
 import React from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-const MUISelect = ({ value, onChange, options, label }) => {
+const MUISelect = ({ value, onChange, options, label, isNone }) => {
 
   const onSortingSelected = (event) => {
     onChange(event.target.value)
@@ -19,10 +19,11 @@ const MUISelect = ({ value, onChange, options, label }) => {
         autoWidth
         label={label}
       >
+        {isNone && 
         <MenuItem value="">
           <em>None</em>
-        </MenuItem>
-
+        </MenuItem>}
+        
         {options.map((option) => (
           <MenuItem 
             value={option.value}
